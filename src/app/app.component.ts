@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-
-export class Cat{
-  id: number;
-  name: string;
-}
+import { Cat } from './cat';
 
 const CATS: Cat[] = [
   {id: 5, name: 'Nyo Nyo'},
@@ -15,24 +11,17 @@ const CATS: Cat[] = [
   selector: 'app-root',
   template:`
   <h1>{{title}}</h1>
-  <div *ngIf="selectedCat">
-    <h2>{{selectedCat.name}} details!</h2>
-    <div><label>id: </label>{{selectedCat.id}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="selectedCat.name" placeholder="cat's name">
-    </div>
-  </div>
-  
   
   <h2>My Cats</h2>
-  <ul>
+  <ul class="cats">
     <li *ngFor="let cat of cats" 
       [class.selected]="cat === selectedCat"
       (click)="onSelect(cat)">
       <span class="badge">{{ cat.id }}</span>{{ cat.name }}
     </li>  
   </ul>
+  
+  <my-cat-detail [cat]="selectedCat"></my-cat-detail>
   `,
   styles:[`
     .selected{
