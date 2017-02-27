@@ -1,11 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cat } from './cat';
+import { CatService } from './cat.service';
 
-const CATS: Cat[] = [
-  {id: 5, name: 'Nyo Nyo'},
-  {id: 6, name: 'Ebony'},
-  {id: 7, name: 'Wille'}
-  ];
+
 
 @Component({
   selector: 'app-root',
@@ -72,13 +69,23 @@ const CATS: Cat[] = [
       border-radius: 4px 0 0 4px;
     }
   `],
-
+  providers: [CatService],
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Our Lovely Cats!';
-  cats = CATS;
+  cats : Cat[];
   selectedCat: Cat;
+
+  constructor(private catService:CatService){}
+
+  getCats(): void{
+    this.catService.getCats().then(cats=>this.cats = cats);
+  }
+
+  ngOnInit(): void{
+    this.getCats();
+  }
 
   onSelect(cat: Cat): void{
     this.selectedCat = cat;
